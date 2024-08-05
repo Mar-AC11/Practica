@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="escuelaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="asignatura">
+    <Key>
+      <PropertyRef Name="IdAsignatura" />
+    </Key>
+    <Property Name="IdAsignatura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomAsignatura" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Carrera" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="carrera">
+    <Key>
+      <PropertyRef Name="IdCarrera" />
+    </Key>
+    <Property Name="IdCarrera" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomCarrera" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Clave" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="docente">
+    <Key>
+      <PropertyRef Name="IdDocente" />
+    </Key>
+    <Property Name="IdDocente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cedula" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ApPaterno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ApMaterno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Asignatura" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="estudiante">
+    <Key>
+      <PropertyRef Name="IdEstudiante" />
+    </Key>
+    <Property Name="IdEstudiante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NoControl" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ApPaterno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ApMaterno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Carreraa" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contrasena" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Asignatura">
+    <End Role="asignatura" Type="Self.asignatura" Multiplicity="1" />
+    <End Role="docente" Type="Self.docente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="asignatura">
+        <PropertyRef Name="IdAsignatura" />
+      </Principal>
+      <Dependent Role="docente">
+        <PropertyRef Name="Asignatura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrera">
+    <End Role="carrera" Type="Self.carrera" Multiplicity="1" />
+    <End Role="asignatura" Type="Self.asignatura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="carrera">
+        <PropertyRef Name="IdCarrera" />
+      </Principal>
+      <Dependent Role="asignatura">
+        <PropertyRef Name="Carrera" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carreraa">
+    <End Role="carrera" Type="Self.carrera" Multiplicity="1" />
+    <End Role="estudiante" Type="Self.estudiante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="carrera">
+        <PropertyRef Name="IdCarrera" />
+      </Principal>
+      <Dependent Role="estudiante">
+        <PropertyRef Name="Carreraa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="escuelaModelStoreContainer">
+    <EntitySet Name="asignatura" EntityType="Self.asignatura" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="carrera" EntityType="Self.carrera" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="docente" EntityType="Self.docente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="estudiante" EntityType="Self.estudiante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Asignatura" Association="Self.FK_Asignatura">
+      <End Role="asignatura" EntitySet="asignatura" />
+      <End Role="docente" EntitySet="docente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrera" Association="Self.FK_Carrera">
+      <End Role="carrera" EntitySet="carrera" />
+      <End Role="asignatura" EntitySet="asignatura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carreraa" Association="Self.FK_Carreraa">
+      <End Role="carrera" EntitySet="carrera" />
+      <End Role="estudiante" EntitySet="estudiante" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

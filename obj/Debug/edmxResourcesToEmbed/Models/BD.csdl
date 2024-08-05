@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="escuelaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="escuelaEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="escuelaModel.sysdiagrams" />
+    <EntitySet Name="asignatura" EntityType="escuelaModel.asignatura" />
+    <EntitySet Name="carrera" EntityType="escuelaModel.carrera" />
+    <EntitySet Name="docente" EntityType="escuelaModel.docente" />
+    <EntitySet Name="estudiante" EntityType="escuelaModel.estudiante" />
+    <AssociationSet Name="FK_Asignatura" Association="escuelaModel.FK_Asignatura">
+      <End Role="asignatura" EntitySet="asignatura" />
+      <End Role="docente" EntitySet="docente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrera" Association="escuelaModel.FK_Carrera">
+      <End Role="carrera" EntitySet="carrera" />
+      <End Role="asignatura" EntitySet="asignatura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carreraa" Association="escuelaModel.FK_Carreraa">
+      <End Role="carrera" EntitySet="carrera" />
+      <End Role="estudiante" EntitySet="estudiante" />
+    </AssociationSet>
+    <EntitySet Name="usuario" EntityType="escuelaModel.usuario" />
+  </EntityContainer>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="asignatura">
+    <Key>
+      <PropertyRef Name="IdAsignatura" />
+    </Key>
+    <Property Name="IdAsignatura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomAsignatura" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Carrera" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="docente" Relationship="escuelaModel.FK_Asignatura" FromRole="asignatura" ToRole="docente" />
+    <NavigationProperty Name="carrera1" Relationship="escuelaModel.FK_Carrera" FromRole="asignatura" ToRole="carrera" />
+  </EntityType>
+  <EntityType Name="carrera">
+    <Key>
+      <PropertyRef Name="IdCarrera" />
+    </Key>
+    <Property Name="IdCarrera" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomCarrera" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Clave" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="asignatura" Relationship="escuelaModel.FK_Carrera" FromRole="carrera" ToRole="asignatura" />
+    <NavigationProperty Name="estudiante" Relationship="escuelaModel.FK_Carreraa" FromRole="carrera" ToRole="estudiante" />
+  </EntityType>
+  <EntityType Name="docente">
+    <Key>
+      <PropertyRef Name="IdDocente" />
+    </Key>
+    <Property Name="IdDocente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cedula" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ApPaterno" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ApMaterno" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Asignatura" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="asignatura1" Relationship="escuelaModel.FK_Asignatura" FromRole="docente" ToRole="asignatura" />
+  </EntityType>
+  <EntityType Name="estudiante">
+    <Key>
+      <PropertyRef Name="IdEstudiante" />
+    </Key>
+    <Property Name="IdEstudiante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NoControl" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ApPaterno" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ApMaterno" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Carreraa" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="carrera" Relationship="escuelaModel.FK_Carreraa" FromRole="estudiante" ToRole="carrera" />
+  </EntityType>
+  <Association Name="FK_Asignatura">
+    <End Type="escuelaModel.asignatura" Role="asignatura" Multiplicity="1" />
+    <End Type="escuelaModel.docente" Role="docente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="asignatura">
+        <PropertyRef Name="IdAsignatura" />
+      </Principal>
+      <Dependent Role="docente">
+        <PropertyRef Name="Asignatura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrera">
+    <End Type="escuelaModel.carrera" Role="carrera" Multiplicity="1" />
+    <End Type="escuelaModel.asignatura" Role="asignatura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="carrera">
+        <PropertyRef Name="IdCarrera" />
+      </Principal>
+      <Dependent Role="asignatura">
+        <PropertyRef Name="Carrera" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carreraa">
+    <End Type="escuelaModel.carrera" Role="carrera" Multiplicity="1" />
+    <End Type="escuelaModel.estudiante" Role="estudiante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="carrera">
+        <PropertyRef Name="IdCarrera" />
+      </Principal>
+      <Dependent Role="estudiante">
+        <PropertyRef Name="Carreraa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contrasena" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

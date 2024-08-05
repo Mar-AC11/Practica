@@ -1,0 +1,29 @@
+﻿@model Practica.Models.TableModelAsignatura.AsignaturaModel
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Editar", "Asignatura", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(d => d.IdAsignatura)
+            <div>
+                @Html.LabelFor(d => d.NomAsignatura)
+                @Html.TextBoxFor(d => d.NomAsignatura, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.NomAsignatura, null, new { @class = "red" })
+            </div>
+            <div>
+                @Html.LabelFor(d => d.Carrera)
+                @Html.DropDownListFor(d => d.Carrera, (SelectList)ViewBag.Carreraa,
+                new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Carrera, null, new { @class = "red" })
+            </div>
+            <div style="text-align:right">
+                <input value="Guardar" class="btn btn-primary" type="submit" />
+            </div>
+        </div>
+    </div>
+}

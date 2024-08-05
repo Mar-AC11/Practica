@@ -1,0 +1,26 @@
+﻿@model Practica.Models.TableModelCarrera.CarreraModel
+@{
+    ViewBag.Title = "Nueva Carrera";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Nuevo", "Carrera", FormMethod.Post)) {
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            @Html.LabelFor(d => d.NomCarrera)
+            @Html.TextBoxFor(d => d.NomCarrera, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.NomCarrera, null, new { @class = "red" })
+        </div>
+        <div>
+            @Html.LabelFor(d => d.Clave)
+            @Html.TextBoxFor(d => d.Clave, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.Clave, null, new { @class = "red" })
+        </div>
+        <div style="text-align:right">
+            <input  value="Guardar" class="btn btn-primary" type="submit"/>
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,44 @@
+﻿@model Practica.Models.TableModelDocente.DocenteModel
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Editar", "Docente", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(d => d.IdDocente)
+            <div>
+                @Html.LabelFor(d => d.Cedula)
+                @Html.TextBoxFor(d => d.Cedula, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Cedula, null, new { @class = "red" })
+            </div>
+            <div>
+                @Html.LabelFor(d => d.Nombre)
+                @Html.TextBoxFor(d => d.Nombre, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Nombre, null, new { @class = "red" })
+            </div>
+            <div>
+                @Html.LabelFor(d => d.ApPaterno)
+                @Html.TextBoxFor(d => d.ApPaterno, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.ApPaterno, null, new { @class = "red" })
+            </div>
+            <div>
+                @Html.LabelFor(d => d.ApMaterno)
+                @Html.TextBoxFor(d => d.ApMaterno, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.ApMaterno, null, new { @class = "red" })
+            </div>
+            <div>
+                @Html.LabelFor(d => d.Asignatura)
+                @Html.DropDownListFor(d => d.Asignatura, (SelectList)ViewBag.Carreraa,
+                new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Asignatura, null, new { @class = "red" })
+            </div>
+            <div style="text-align:right">
+                <input value="Guardar" class="btn btn-primary" type="submit" />
+            </div>
+        </div>
+    </div>
+}

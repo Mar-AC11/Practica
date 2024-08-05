@@ -1,0 +1,51 @@
+﻿@model List<Practica.Models.TableModelEstudiante.EstudianteTableModel>
+@{
+    ViewBag.Title = "Estudiantes";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row" style="text-align:right; padding:10px;">
+    <a href="~/Estudiante/Nuevo" class="btn btn-primary">Nuevo</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Número de Control</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Carrera</th>
+            </tr>
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    <td>@oElemento.IdEstudiante</td>
+                    <td>@oElemento.NoControl</td>
+                    <td>@oElemento.Nombre</td>
+                    <td>@oElemento.ApPaterno</td>
+                    <td>@oElemento.ApMaterno</td>
+                    <td>@oElemento.NomCarrera</td>
+                    <td>
+                        <a class="btn btn-primary" href="~/Estudiante/Editar/@oElemento.IdEstudiante">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a class="btn btn-danger" href="javascript:void(0);" onclick="confirmaEliminar(@oElemento.IdEstudiante)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    function confirmaEliminar(id) {
+        if (confirm("¿Está seguro de que desea eliminar este registro?")) {
+            window.location.href = '/Estudiante/Eliminar/' + id;
+        }
+    }</script>
